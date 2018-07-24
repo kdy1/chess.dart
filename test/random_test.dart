@@ -6,13 +6,13 @@ void main() {
   while (!chess.game_over) {
     print('position: ' + chess.fen);
     print(chess.ascii);
-    var moves = chess.moves();
+    var moves = chess.generate_moves();
     moves.shuffle();
     var move = moves[0];
     chess.move(move);
-    print('move: ' + move);
+    print('move: $move');
   }
-  
+
   print(chess.ascii);
   if (chess.in_checkmate) {
     print("Checkmate");
