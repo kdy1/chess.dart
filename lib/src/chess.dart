@@ -2078,7 +2078,7 @@ class Chess {
 
 @immutable
 @JsonSerializable()
-class Piece extends Object with _$PieceSerializerMixin {
+class Piece {
   final PieceType type;
   final ChessColor color;
 
@@ -2238,7 +2238,7 @@ class ColorMap<T> {
 }
 
 @JsonSerializable()
-class Move extends _$MoveSerializerMixin {
+class Move {
   final ChessColor color;
   final int from;
   final int to;
@@ -2247,7 +2247,7 @@ class Move extends _$MoveSerializerMixin {
   final PieceType captured;
   final PieceType promotion;
 
-  Move({
+  const Move({
     this.color,
     this.from,
     this.to,
