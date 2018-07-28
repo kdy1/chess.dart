@@ -2090,6 +2090,8 @@ class Piece {
 
   factory Piece.fromJson(Map<String, dynamic> data) => _$PieceFromJson(data);
 
+  Map<String, dynamic> toJson() => _$PieceToJson(this);
+
   String _toSymbol() {
     return (color == white)
         ? PieceType._pieceTypeToUpper[type]
@@ -2237,7 +2239,7 @@ class ColorMap<T> {
   }
 }
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class Move {
   final ChessColor color;
   final int from;
@@ -2258,6 +2260,8 @@ class Move {
   });
 
   factory Move.fromJson(Map<String, dynamic> data) => _$MoveFromJson(data);
+
+  Map<String, dynamic> toJson() => _$MoveToJson(this);
 
   @override
   String toString() {
