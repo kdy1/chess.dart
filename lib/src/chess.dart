@@ -1366,6 +1366,10 @@ class Chess {
   }
 
   make_move(Move move) {
+    assert(move.color == turn);
+    assert(board[move.from] != null);
+    assert(board[move.from].color == turn);
+
     ChessColor us = turn;
     ChessColor them = swap_color(us);
     push(move);
