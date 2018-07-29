@@ -703,7 +703,7 @@ class Chess {
   }
 
   /// Load a position from a FEN String
-  bool load(String fen) {
+  void load(String fen) {
     List tokens = fen.split(new RegExp(r"\s+"));
     String position = tokens[0];
     int square = 0;
@@ -711,8 +711,7 @@ class Chess {
 
     Map validMap = validate_fen(fen);
     if (!validMap["valid"]) {
-      print(validMap["error"]);
-      return false;
+      throw new Exception(validMap["error"]);
     }
 
     clear();
@@ -757,14 +756,12 @@ class Chess {
     move_number = int.parse(tokens[5]);
 
     update_setup(_generateFen());
-
-    return true;
   }
 
   /// Check the formatting of a FEN String is correct
   /// Returns a Map with keys valid, error_number, and error
   static Map validate_fen(fen) {
-    Map errors = {
+    const Map<int, String> errors = {
       0: 'No errors.',
       1: 'FEN string must contain six space-delimited fields.',
       2: '6th field (move number) must be a positive integer.',
