@@ -40,12 +40,21 @@ Move _$MoveFromJson(Map<String, dynamic> json) {
   });
 }
 
-Map<String, dynamic> _$MoveToJson(Move instance) => <String, dynamic>{
-      'color': instance.color?.toJson(),
-      'from': instance.from,
-      'to': instance.to,
-      'flags': instance.flags,
-      'piece': instance.piece?.toJson(),
-      'captured': instance.captured?.toJson(),
-      'promotion': instance.promotion?.toJson()
-    };
+Map<String, dynamic> _$MoveToJson(Move instance) {
+  var val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('color', instance.color?.toJson());
+  writeNotNull('from', instance.from);
+  writeNotNull('to', instance.to);
+  writeNotNull('flags', instance.flags);
+  writeNotNull('piece', instance.piece?.toJson());
+  writeNotNull('captured', instance.captured?.toJson());
+  writeNotNull('promotion', instance.promotion?.toJson());
+  return val;
+}
