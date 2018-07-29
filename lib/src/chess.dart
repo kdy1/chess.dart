@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
+import 'package:quiver/core.dart';
 
 part 'package:chess/src/chess.g.dart';
 
@@ -2098,20 +2099,22 @@ class Piece {
         : PieceType._pieceTypeToLower[type];
   }
 
-  /// TODO: Make it efficient
   @override
-  int get hashCode => _toSymbol().hashCode;
+  bool operator ==(other) =>
+      other is Piece && type == other.type && color == other.color;
+
+  @override
+  int get hashCode => hash2(type, color);
 
   @override
   String toString() => _toSymbol();
 }
 
-/// NOTE: Index is **very** important, as it's used for bit operation.
+@immutable
 @JsonSerializable(
   createFactory: false,
   createToJson: false,
 )
-@immutable
 class PieceType {
   const PieceType._({
     @required this.shift,
@@ -2184,6 +2187,7 @@ class PieceType {
   };
 }
 
+@immutable
 @JsonSerializable(
   createFactory: false,
   createToJson: false,
@@ -2239,6 +2243,7 @@ class ColorMap<T> {
   }
 }
 
+@immutable
 @JsonSerializable(includeIfNull: false)
 class Move {
   final ChessColor color;
@@ -2264,8 +2269,24 @@ class Move {
   Map<String, dynamic> toJson() => _$MoveToJson(this);
 
   @override
+  int get hashCode =>
+      hashObjects([color, from, to, flags, piece, captured, promotion]);
+  @override
+  bool operator ==(other) =>
+      other is Move &&
+      color == other.color &&
+      from == other.from &&
+      to == other.to &&
+      flags == other.flags &&
+      piece == other.piece &&
+      captured == other.captured &&
+      promotion == other.promotion;
+
+  @override
   String toString() {
-    return 'Move(${toCellName(from)} -> ${toCellName(to)}) ';
+    if (promotion == null)
+      return 'Move(${toCellName(from)} -> ${toCellName(to)})';
+    return 'Move(${toCellName(from)} -> ${toCellName(to)}, prootion = $promotion)';
   }
 }
 
