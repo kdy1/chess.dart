@@ -704,10 +704,8 @@ class Chess {
 
   /// Load a position from a FEN String
   void load(String fen) {
-    List tokens = fen.split(new RegExp(r"\s+"));
+    List<String> tokens = fen.split(new RegExp(r"\s+"));
     String position = tokens[0];
-    int square = 0;
-    String valid = SYMBOLS + '12345678/';
 
     Map validMap = validate_fen(fen);
     if (!validMap["valid"]) {
@@ -716,18 +714,19 @@ class Chess {
 
     clear();
 
+    int cellIndex = 0;
     for (int i = 0; i < position.length; i++) {
-      String piece = position[i];
+      final String piece = position[i];
 
       if (piece == '/') {
-        square += 8;
+        cellIndex += 8;
       } else if (_isDigit(piece)) {
-        square += int.parse(piece);
+        cellIndex += int.parse(piece);
       } else {
         ChessColor color = (piece == piece.toUpperCase()) ? white : black;
         PieceType type = PieceType._stringToPieceType[piece.toLowerCase()];
-        put(new Piece(type: type, color: color), toCellName(square));
-        square++;
+        put(new Piece(type: type, color: color), toCellName(cellIndex));
+        cellIndex++;
       }
     }
 
