@@ -6,7 +6,7 @@ authors:
 description: A fork of https://github.com/davecom/chess.dart with static typing and json support.
 homepage: https://github.com/kdy1/chess.dart
 dependencies:
-  quiver: '>=0.29.0 <0.30.0'
+  quiver: '>=2.0.0 <3.0.0'
   json_annotation: '^1.0.0'
 
 dev_dependencies:
